@@ -1,5 +1,7 @@
 package riva.vincent.mytodolist.Todo;
 
+import android.content.SharedPreferences;
+
 import java.util.ArrayList;
 
 public class TodoList {
@@ -12,9 +14,6 @@ public class TodoList {
     }
 
     private TodoList() {
-        list.add("Salut à tous");
-        list.add("les amis");
-        list.add("C'est David LafargePokemon");
     }
 
     public void addItemToList(String string) {
@@ -27,5 +26,9 @@ public class TodoList {
 
     public ArrayList<String> getItems() {
         return list;
+    }
+
+    public void initialize(ArrayList<String> newList) {
+        list = newList;
     }
 }

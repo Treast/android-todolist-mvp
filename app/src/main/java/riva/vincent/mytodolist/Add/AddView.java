@@ -6,6 +6,6 @@ package riva.vincent.mytodolist.Add;
 
 public interface AddView {
 
-    public void goBack();
+    public void goBack(String string);
 
 }

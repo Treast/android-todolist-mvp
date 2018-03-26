@@ -16,7 +16,6 @@ public class AddPresenterImpl implements AddPresenter {
 
     @Override
     public void addItemToList(String string) {
-        TodoList.getInstance().addItemToList(string);
-        this.addView.goBack();
+        this.addView.goBack(string);
     }
 }
