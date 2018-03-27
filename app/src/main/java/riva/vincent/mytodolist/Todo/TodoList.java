@@ -1,11 +1,14 @@
 package riva.vincent.mytodolist.Todo;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.util.ArrayList;
 
+import riva.vincent.mytodolist.TodoTask;
+
 public class TodoList {
-    private ArrayList<String> list = new ArrayList<String>();
+    private ArrayList<TodoTask> list = new ArrayList<TodoTask>();
 
     private static final TodoList ourInstance = new TodoList();
 
@@ -16,19 +19,20 @@ public class TodoList {
     private TodoList() {
     }
 
-    public void addItemToList(String string) {
-        list.add(string);
+    public void addItemToList(String string, boolean isImportant) {
+        TodoTask task = new TodoTask(string, isImportant);
+        this.list.add(task);
     }
 
     public void clearList() {
         list.clear();
     }
 
-    public ArrayList<String> getItems() {
+    public ArrayList<TodoTask> getItems() {
         return list;
     }
 
-    public void initialize(ArrayList<String> newList) {
+    public void initialize(ArrayList<TodoTask> newList) {
         list = newList;
     }
 }

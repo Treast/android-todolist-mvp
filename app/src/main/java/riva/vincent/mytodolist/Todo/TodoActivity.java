@@ -13,12 +13,17 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import riva.vincent.mytodolist.Add.AddActivity;
 import riva.vincent.mytodolist.R;
+import riva.vincent.mytodolist.TodoTask;
 
 
 public class TodoActivity extends Activity implements TodoView, View.OnClickListener {
@@ -36,6 +41,7 @@ public class TodoActivity extends Activity implements TodoView, View.OnClickList
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        Gson gson = new Gson();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
@@ -44,9 +50,8 @@ public class TodoActivity extends Activity implements TodoView, View.OnClickList
         fab = findViewById(R.id.fab);
 
         SharedPreferences settings = getSharedPreferences(SUPER_PREFS, 0);
-        Set<String> set = settings.getStringSet("list", new HashSet<String>());
-        TodoList.getInstance().initialize(new ArrayList<String>(set));
-        Log.d("lol", TodoList.getInstance().getItems().toString());
+        String gsonSerialized = settings.getString("todoList", "[]");
+        TodoList.getInstance().initialize((ArrayList<TodoTask>) gson.fromJson(gsonSerialized, new TypeToken<ArrayList<TodoTask>>(){}.getType()));
 
         presenter = new TodoPresenterImpl(this);
 
@@ -79,7 +84,7 @@ public class TodoActivity extends Activity implements TodoView, View.OnClickList
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == ITEM_ADDED && resultCode == RESULT_OK) {
-            TodoList.getInstance().addItemToList(data.getStringExtra("item"));
+            TodoList.getInstance().addItemToList(data.getStringExtra("item"), data.getBooleanExtra("isImportant", false));
             refreshAdapter();
         }
     }
@@ -91,9 +96,10 @@ public class TodoActivity extends Activity implements TodoView, View.OnClickList
     }
 
     public void updateSharedPreferences() {
+        Gson gson = new Gson();
         SharedPreferences settings = getSharedPreferences(SUPER_PREFS, 0);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putStringSet("list", new HashSet<String>(TodoList.getInstance().getItems()));
+        editor.putString("todoList", gson.toJson(TodoList.getInstance().getItems()));
         editor.commit();
     }
 }

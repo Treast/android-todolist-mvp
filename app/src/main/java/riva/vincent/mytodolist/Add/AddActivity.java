@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import riva.vincent.mytodolist.R;
@@ -20,6 +21,7 @@ public class AddActivity extends Activity implements AddView, View.OnClickListen
     private EditText editText;
     private Button validateButton;
     private AddPresenter presenter;
+    private CheckBox checkBoxView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class AddActivity extends Activity implements AddView, View.OnClickListen
 
         editText = findViewById(R.id.editTextView);
         validateButton = findViewById(R.id.validateButton);
+        checkBoxView = findViewById(R.id.checkBoxView);
 
         validateButton.setOnClickListener(this);
     }
@@ -38,15 +41,16 @@ public class AddActivity extends Activity implements AddView, View.OnClickListen
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.validateButton:
-                presenter.addItemToList(editText.getText().toString());
+                presenter.addItemToList(editText.getText().toString(), checkBoxView.isChecked() );
                 break;
         }
     }
 
     @Override
-    public void goBack(String string) {
+    public void goBack(String string, boolean isImportant) {
         Intent intent = new Intent();
         intent.putExtra("item", string);
+        intent.putExtra("isImportant", isImportant);
         setResult(RESULT_OK, intent);
         finish();
     }

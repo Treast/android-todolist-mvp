@@ -12,6 +12,12 @@
         android:ems="10"
         android:inputType="textPersonName" />
 
+    <CheckBox
+        android:id="@+id/checkBoxView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Est important ?" />
+
     <Button
         android:id="@+id/validateButton"
         android:layout_width="match_parent"

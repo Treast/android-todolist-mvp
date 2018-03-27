@@ -15,7 +15,7 @@ public class AddPresenterImpl implements AddPresenter {
     }
 
     @Override
-    public void addItemToList(String string) {
-        this.addView.goBack(string);
+    public void addItemToList(String string, boolean isImportant) {
+        this.addView.goBack(string, isImportant);
     }
 }

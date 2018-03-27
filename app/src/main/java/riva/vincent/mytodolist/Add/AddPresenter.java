@@ -6,6 +6,6 @@ package riva.vincent.mytodolist.Add;
 
 public interface AddPresenter {
 
-    void addItemToList(String string);
+    void addItemToList(String string, boolean isImportant);
 
 }

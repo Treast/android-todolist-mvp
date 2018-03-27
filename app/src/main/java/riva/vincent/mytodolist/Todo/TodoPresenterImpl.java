@@ -21,8 +21,8 @@ public class TodoPresenterImpl implements TodoPresenter {
     }
 
     @Override
-    public void handleClickOnValidateButton(View view, String string) {
-        TodoList.getInstance().addItemToList(string);
+    public void handleClickOnValidateButton(View view, String string, boolean isImportant) {
+        TodoList.getInstance().addItemToList(string, isImportant);
         this.todoView.refreshAdapter();
     }
 
